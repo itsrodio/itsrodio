@@ -43,10 +43,10 @@
 ---
 
 # 📊 GitHub Stats:
-![](https://nirzak-streak-stats.vercel.app/?user=rodionov-nn&theme=apprentice&hide_border=false)  
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=rodionov-nn&theme=apprentice&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
+![](https://nirzak-streak-stats.vercel.app/?user=itsrodio&theme=apprentice&hide_border=false)  
+![](https://github-readme-stats.vercel.app/api/top-langs/?username=itsrodio&theme=apprentice&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
 
 ---
 
-[![](https://visitcount.itsvg.in/api?id=rodionov-nn&icon=0&color=0)](https://visitcount.itsvg.in)
+[![](https://visitcount.itsvg.in/api?id=itsrodio&icon=0&color=0)](https://visitcount.itsvg.in)
 
