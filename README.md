@@ -1,52 +1,73 @@
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Geist&weight=800&size=24&pause=2500&color=FFFFFF&width=500&height=50&lines=Hello%2C+I%E2%80%99m+Nikita.+Welcome+to+my+GitHub!)](https://git.io/typing-svg)
+<div align="center">
+  <img src="./dist/profile.svg" alt="rodio terminal profile" width="100%" />
+</div>
 
-# 💫 About Me:
-- 🌱 Learning **Next.js, TypeScript** and full-stack development  
-- 💬 Open to discussions and feedback on my projects  
-- 🎮 Love studying new things, gaming and hiking in my free time  
-- 🎧 Big fan of rock, metal & diverse music — [check my Spotify!](https://open.spotify.com/user/315jytconnz3szvuadzauuinmd4q?si=de1d004a4ecb448b)  
+<br />
 
----
+<details>
+<summary><b>⚡ How this works & How to use this template for your own profile</b></summary>
 
-## 🌐 Socials:
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/rodionov-nn)
-[![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:rodionov.nmx@gmail.com)
-[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/rodionov.nn)
-[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://my-portfolio-rodionovnn.vercel.app/)
+<br />
 
----
+This profile card is a dynamically generated **animated SVG** built with TypeScript — zero external runtime dependencies, native GitHub **Light / Dark mode** support (`prefers-color-scheme`), live GitHub stats, daily `Uptime` calculation, and **automatic seasonal/holiday ASCII shaders**.
 
-# 💻 Tech Stack:
-
-**Frontend:**  
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
-
-**Backend & Databases:**  
-![NodeJS](https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=node-dot-js&logoColor=white)
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
-
-**Tools & Other:**  
-![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
-![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
-![Photoshop](https://img.shields.io/badge/adobe%20photoshop-%2331A8FF.svg?style=for-the-badge&logo=adobe%20photoshop&logoColor=white)
-![Raspberry Pi](https://img.shields.io/badge/-Raspberry_Pi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
+### ✨ Features
+- **6 High-Res (`60×26`) Animated ASCII Shaders with Multi-Color Palettes**:
+  - `plasma` — Dynamic 6-stop contour plasma wave flowing across `#2D68C4` → `#6E56CF` *(default)*
+  - `snow` — Decorated Christmas tree with twinkling ornaments & natural diagonal snowfall *(Dec 20 – Jan 10)*
+  - `heart` — 3D beating heart with specular highlight & pulse rings *(Feb 13 – Feb 15)*
+  - `fireworks` — Multi-color rising rockets & gravity-affected firework bursts *(Sep 01 – Sep 03, Birthday)*
+  - `matrix` — Authentic 4-stop phosphor digital rain *(Sep 12 – Sep 14, Programmer's Day)*
+  - `pumpkin` — Carved Jack-o'-lantern with flickering candlelight & rising embers *(Oct 29 – Nov 01, Halloween)*
+- **Dynamic Palette & Event Greetings**: The 6 color swatches at the bottom and the `Event:` row automatically adapt to the active holiday shader.
+- **Automated Daily Updates**: A GitHub Actions workflow rebuilds the SVG every day at `00:00 UTC` so your `Uptime` and GitHub stats stay up to date.
 
 ---
 
-# 📊 GitHub Stats:
-![](https://nirzak-streak-stats.vercel.app/?user=itsrodio&theme=apprentice&hide_border=false)  
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=itsrodio&theme=apprentice&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
+### 🚀 Quick Start (Fork & Customize)
+
+1. **Fork** or click **Use this template** on [`itsrodio/itsrodio`](https://github.com/itsrodio/itsrodio) (and rename the repo to `<your-github-username>/<your-github-username>`).
+2. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
+3. **Preview all shaders locally** with live reload & theme switcher (`http://localhost:3333`):
+   ```bash
+   pnpm dev
+   ```
+4. **Customize your profile** in [`src/profile.config.ts`](./src/profile.config.ts):
+   - Change `githubUsername`, `terminal` prompt/title, and `info` rows.
+   - Set your `birthDate` in the `Uptime` row (`YYYY-MM-DD`).
+   - Adjust `shader.mode` (`'auto'` for date schedule, or force `'plasma' | 'pumpkin' | 'snow' | 'heart' | 'matrix' | 'fireworks'`).
+   - Customize `shader.schedule` dates (e.g. set the `Birthday` rule to your own birthday!).
+5. **Generate the production SVG**:
+   ```bash
+   pnpm run build
+   ```
+
+### 🔒 Counting Private Repositories & Contributions (Optional)
+By default, the generator fetches your total contributions (including private contributions if *"Include private contributions on my profile"* is enabled in your GitHub settings) directly from your contribution calendar.
+
+If you also want the **`repos` count** to automatically include your private repositories:
+1. Create a classic GitHub Personal Access Token (PAT) with `repo` (or `read:user`) scope.
+2. Add it to your repository secrets (**Settings → Secrets and variables → Actions**) as `GH_STATS_TOKEN` (or set `minRepos` in [`src/profile.config.ts`](./src/profile.config.ts)).
 
 ---
 
-[![](https://visitcount.itsvg.in/api?id=itsrodio&icon=0&color=0)](https://visitcount.itsvg.in)
+### ⭐ Credits & Attribution
 
+If you use this template for your own GitHub profile, please:
+1. **Give a ⭐ to the original repository**: [`itsrodio/itsrodio`](https://github.com/itsrodio/itsrodio)
+2. **Keep the author credit line below** in your `README.md` (do not remove the link to [`@itsrodio`](https://github.com/itsrodio)):
+
+```markdown
+<div align="center">
+  <sub>Terminal profile template crafted by <a href="https://github.com/itsrodio">@itsrodio</a></sub>
+</div>
+```
+
+</details>
+
+<div align="center">
+  <sub>Terminal profile template crafted by <a href="https://github.com/itsrodio">@itsrodio</a></sub>
+</div>

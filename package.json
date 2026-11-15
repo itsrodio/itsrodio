@@ -1,0 +1,36 @@
+{
+  "name": "itsrodio",
+  "version": "1.0.0",
+  "description": "Animated neofetch-style GitHub profile SVG generator with seasonal ASCII shaders",
+  "main": "src/profile-fetch.ts",
+  "scripts": {
+    "build": "tsx src/profile-fetch.ts",
+    "dev": "tsx watch src/preview.ts",
+    "preview:build": "tsx src/preview.ts --once",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "github-profile",
+    "github-profile-readme",
+    "svg-animation",
+    "ascii-shader",
+    "neofetch",
+    "terminal"
+  ],
+  "author": "itsrodio",
+  "license": "MIT",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.21.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.21.0",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
