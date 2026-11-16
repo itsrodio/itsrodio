@@ -29,7 +29,6 @@ export const PROFILE_CONFIG: ProfileConfig = {
       value: {
         type: 'github',
         metrics: ['repos', 'stars', 'commits'],
-        minRepos: 13,
       },
     },
 
