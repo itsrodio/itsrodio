@@ -2,46 +2,91 @@ import * as fs from 'node:fs';
 import * as http from 'node:http';
 import * as path from 'node:path';
 import { PROFILE_CONFIG as cfg, type ShaderPreset } from './profile.config.js';
-import { buildSvg, fetchGithubStats, type GithubStatsData } from './profile-fetch.js';
+import {
+  SHADER_PRESETS,
+  buildSvg,
+  fetchGithubStats,
+  getShaderPresetConfig,
+  type GithubStatsData,
+} from './profile-fetch.js';
 
-const PRESETS: { id: ShaderPreset; title: string; badge: string; dates: string }[] = [
-  { id: 'plasma', title: 'Plasma (Default)', badge: '60×26 Hi-Res · Contour Wave', dates: 'Default' },
-  { id: 'pumpkin', title: 'Pumpkin (Halloween)', badge: '60×26 Hi-Res · Candlelight', dates: 'Oct 29 – Nov 01' },
-  { id: 'snow', title: 'Snow & Tree (New Year)', badge: '60×26 Hi-Res · Multi-Color', dates: 'Dec 20 – Jan 10' },
-  { id: 'heart', title: "Heart (Valentine's)", badge: '60×26 Hi-Res · 3D Specular', dates: 'Feb 13 – Feb 15' },
-  { id: 'matrix', title: 'Matrix (Programmer Day)', badge: '60×26 Hi-Res · Phosphor Rain', dates: 'Sep 12 – Sep 14' },
-  { id: 'fireworks', title: 'Fireworks (Birthday)', badge: '60×26 Hi-Res · Multi-Burst', dates: 'Sep 01 – Sep 03' },
+const MONTH_NAMES = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
+
+function formatMonthDay(mmdd: string): string {
+  const [mStr, dStr] = mmdd.split('-');
+  const monthIdx = (Number(mStr) || 1) - 1;
+  const month = MONTH_NAMES[monthIdx] ?? 'Jan';
+  const day = String(Number(dStr) || 1).padStart(2, '0');
+  return `${month} ${day}`;
+}
+
+function getPresetScheduleLabel(preset: ShaderPreset): string {
+  const rule = cfg.shader.schedule.find((r) => r.shader === preset);
+  if (!rule) {
+    return preset === cfg.shader.default ? 'Default' : 'Custom';
+  }
+  return `${formatMonthDay(rule.from)} – ${formatMonthDay(rule.to)}`;
+}
 
 function svgToDataUri(svg: string): string {
   return `data:image/svg+xml;base64,${Buffer.from(svg, 'utf-8').toString('base64')}`;
 }
 
-function buildPreviewHtml(stats: GithubStatsData | null, withLiveReload = false): string {
-  const cardsHtml = PRESETS.map((p) => {
-    const darkSvg = buildSvg(stats, { overridePreset: p.id, forceColorScheme: 'dark' });
-    const lightSvg = buildSvg(stats, { overridePreset: p.id, forceColorScheme: 'light' });
+function buildPreviewCardsHtml(stats: GithubStatsData | null): string {
+  const presetIds = Object.keys(SHADER_PRESETS) as ShaderPreset[];
 
-    const darkUri = svgToDataUri(darkSvg);
-    const lightUri = svgToDataUri(lightSvg);
+  return presetIds
+    .map((id) => {
+      const meta = getShaderPresetConfig(id);
+      const dates = getPresetScheduleLabel(id);
+      const darkSvg = buildSvg(stats, { overridePreset: id, forceColorScheme: 'dark' });
+      const lightSvg = buildSvg(stats, { overridePreset: id, forceColorScheme: 'light' });
 
-    return `
-      <div class="card" data-preset="${p.id}">
+      const darkUri = svgToDataUri(darkSvg);
+      const lightUri = svgToDataUri(lightSvg);
+
+      return `
+      <div class="card" data-preset="${id}">
         <div class="card-header">
           <div>
-            <h2>${p.title}</h2>
-            <span class="dates">${p.dates}</span>
+            <h2>${meta.title}</h2>
+            <span class="dates">${dates}</span>
           </div>
-          <span class="badge">${p.badge}</span>
+          <span class="badge">${meta.badge}</span>
         </div>
         <div class="svg-wrap theme-dark-svg">
-          <img src="${darkUri}" alt="${p.title} (Dark)" />
+          <img src="${darkUri}" alt="${meta.title} (Dark)" />
         </div>
         <div class="svg-wrap theme-light-svg">
-          <img src="${lightUri}" alt="${p.title} (Light)" />
+          <img src="${lightUri}" alt="${meta.title} (Light)" />
         </div>
       </div>`;
-  }).join('\n');
+    })
+    .join('\n');
+}
+
+function buildPreviewHtml(cardsHtml: string, withLiveReload = false): string {
+  const presetIds = Object.keys(SHADER_PRESETS) as ShaderPreset[];
+  const filterButtonsHtml = [
+    `<button class="active" data-filter="all">All (${presetIds.length})</button>`,
+    ...presetIds.map((id) => {
+      const shortLabel = getShaderPresetConfig(id).title.split(' (')[0] ?? id;
+      return `<button data-filter="${id}">${shortLabel}</button>`;
+    }),
+  ].join('\n        ');
 
   const liveReloadScript = withLiveReload
     ? `<script>
@@ -213,17 +258,11 @@ function buildPreviewHtml(stats: GithubStatsData | null, withLiveReload = false)
   <header>
     <div class="brand">
       <h1>Terminal Shader Preview Gallery</h1>
-      <p>All 6 presets rendered directly from <code>src/profile-fetch.ts</code></p>
+      <p>All ${presetIds.length} presets rendered directly from <code>src/profile-fetch.ts</code></p>
     </div>
     <div class="controls">
       <div class="btn-group" id="preset-filter">
-        <button class="active" data-filter="all">All (6)</button>
-        <button data-filter="plasma">Plasma</button>
-        <button data-filter="pumpkin">Pumpkin</button>
-        <button data-filter="snow">Snow Tree</button>
-        <button data-filter="heart">Heart</button>
-        <button data-filter="matrix">Matrix</button>
-        <button data-filter="fireworks">Fireworks</button>
+        ${filterButtonsHtml}
       </div>
       <div class="btn-group" id="theme-switcher">
         <button class="active" data-set-theme="dark">Dark</button>
@@ -272,16 +311,18 @@ async function run() {
 
   console.log('Fetching GitHub stats for preview...');
   const stats = await fetchGithubStats(cfg.githubUsername);
+  const cardsHtml = buildPreviewCardsHtml(stats);
 
   const previewHtmlPath = path.resolve('dist/preview.html');
   fs.mkdirSync(path.dirname(previewHtmlPath), { recursive: true });
-  fs.writeFileSync(previewHtmlPath, buildPreviewHtml(stats, false), 'utf-8');
-  console.log(`Static preview saved to dist/preview.html`);
+  fs.writeFileSync(previewHtmlPath, buildPreviewHtml(cardsHtml, false), 'utf-8');
+  console.log('Static preview saved to dist/preview.html');
 
   if (once) {
     return;
   }
 
+  const liveHtml = buildPreviewHtml(cardsHtml, true);
   const bootId = Date.now().toString();
   const clients = new Set<http.ServerResponse>();
 
@@ -298,20 +339,30 @@ async function run() {
       return;
     }
 
+    if (req.url === '/favicon.ico') {
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(buildPreviewHtml(stats, true));
+    res.end(liveHtml);
   });
 
-  // Watch src directory for changes when running via `tsx watch` or direct `tsx`
+  // Debounced watcher for changes in src/
+  let reloadTimer: ReturnType<typeof setTimeout> | null = null;
   fs.watch(path.resolve('src'), { recursive: true }, () => {
-    for (const client of clients) {
-      client.write('data: reload\n\n');
-    }
+    if (reloadTimer) clearTimeout(reloadTimer);
+    reloadTimer = setTimeout(() => {
+      for (const client of clients) {
+        client.write('data: reload\n\n');
+      }
+    }, 100);
   });
 
   server.listen(port, () => {
     console.log(`\n✨ Live Shader Preview running at http://localhost:${port}`);
-    console.log(`   (Also saved standalone file at dist/preview.html)\n`);
+    console.log('   (Also saved standalone file at dist/preview.html)\n');
   });
 }
 

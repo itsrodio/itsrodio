@@ -2,7 +2,7 @@ name: Update Profile SVG
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '33 0 * * *' # 00:33 UTC avoids the midnight peak in queues (recommended to change to your own random minute)
   push:
     branches: [main]
     paths:
