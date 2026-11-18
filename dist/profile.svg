@@ -152,7 +152,7 @@
   </text>
   <text x="430" y="222" class="mono">
     <tspan class="accent bold">GitHub:</tspan>
-    <tspan class="fg" dx="6">10 repos · 3 ★ · 571 commits</tspan>
+    <tspan class="fg" dx="6">9 repos · 4 ★ · 572 commits</tspan>
   </text>
   <text x="430" y="244" class="mono muted">── About me ──────────────────────────────</text>
   <text x="430" y="266" class="mono">
@@ -161,7 +161,7 @@
   </text>
   <text x="430" y="288" class="mono">
     <tspan class="accent bold">Uptime:</tspan>
-    <tspan class="fg" dx="6">20 years, 2 months, 15 days</tspan>
+    <tspan class="fg" dx="6">20 years, 2 months, 16 days</tspan>
   </text>
   <text x="430" y="310" class="mono">
     <tspan class="accent bold">Location:</tspan>
